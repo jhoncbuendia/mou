@@ -1,0 +1,116 @@
+{% extends "plantilla/index.html" %}
+{% block nav %}
+	<ul class="nav nav-list">
+          
+
+          
+
+          <li>
+            <a href="#" class="dropdown-toggle">
+              <i class="icon-desktop"></i>
+              <span class="menu-text"> Mi Red</span>
+
+              <b class="arrow icon-angle-down"></b>
+            </a>
+
+            <ul class="submenu">
+              <li>
+                <a class='link' href="/referido/referir">
+                  <i class="icon-double-angle-right"></i>
+                  	Referir persona
+                </a>
+              </li>
+
+              
+
+              
+            </ul>
+          </li>
+
+        </ul>
+
+{% endblock %}
+
+{% block contenido %}
+  {%if p_auspiciador%}
+  <h1>Hola el usuario {{p_auspiciador}} te recomendo</h1>
+  {%else%}
+  <h1>Hola, eres un usuario pionero felicitaciones</h1>
+  {%endif%}
+
+
+  {%if p_referidos%}
+  <table id="referidos" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">
+    <thead>
+      <tr>
+      <th>Nombre</th>
+      <th>Correo</th>
+      <th>Estado</th>
+      </tr>
+    </thead>  
+    <tbody>
+      {%for p in p_referidos%}
+        <tr>
+          <th>{{p.nombre}}</th>
+          <th>{{p.correo}}</th>
+          {%if p.estado == False %}
+            <th>En espera</th>
+          {% else %}
+            <th>Confirmado</th>
+          {%endif%}
+
+          
+        </tr>
+    
+
+      {%endfor%}
+    </tbody>
+
+  </table>
+
+
+
+
+
+  {%endif%}
+  <h1>{{mensaje}}</h1>
+  {% block contenidomain %}{% endblock %}
+{% endblock %}
+
+{% block script %}
+
+<script type="text/javascript">
+;
+  function validateForms(){
+      referidoValidate();
+    
+
+
+  }
+  
+
+  function Nav(){};
+  Nav.prototype = {
+      contenido : $('#contenido'),
+
+      linkAction : function(){
+        c = this.contenido;
+          $('.link').click(function(){
+             
+              c.load($(this).attr('href'),function(){
+                  validateForms();
+                });
+              return false;
+          });
+      },
+  }
+
+  nav = new Nav();
+  nav.linkAction();
+  
+  
+</script>
+
+{% block scriptmain %}
+{% endblock %}
+{% endblock %}
